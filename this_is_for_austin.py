@@ -122,7 +122,7 @@ def compatibility_question(
     global score
 
     if valid_answers is None:
-        valid_answers = [jake_answer.lower()]
+        valid_answers = [jake_comp.lower()]
 
     while True:
         ans_comp = input(f"{num}. {text}\n> ")
