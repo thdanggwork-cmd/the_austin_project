@@ -1,6 +1,6 @@
 # this_is_for_austin.py 🌵
 
-An interactive, terminal-based CLI application engineered to to introduce myself (Jake) to my roommate Austin. Intended to bypass awkward remote roommate small talk, streamline boarding logistics, and stress-test the user's input boundaries.
+An interactive, terminal-based CLI application engineered to introduce myself (Jake) to my roommate Austin. Intended to bypass awkward remote roommate small talk, streamline boarding logistics, and stress-test the user's input boundaries.
 
 > **"thoughtful project"**
 > — ★★★★★ Austin (Verified Roommate)
