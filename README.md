@@ -54,7 +54,7 @@ Gracefully terminates `this_is_for_austin.exe` and releases control of your mach
 
 ## 🛡️ Input Validation & Defensive Coding
 
-This application features a robust **Defensive Input Validation Engine**. If you attempt to break the code with "creative" inputs, you will encounter the `invalid_messages` database, resulting in roastful system notifications
+This application features a robust **Defensive Input Validation Engine**. If you attempt to break the code with "creative" inputs, you will encounter the `invalid_messages` database, resulting in roastful system notifications.
 
 ---
 
