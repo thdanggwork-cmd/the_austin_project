@@ -19,7 +19,7 @@ Note: Unauthorized launch attempts by non-Austins will trigger defensive error p
 
 ---
 ## 👨‍🦲 User Registration:
-When the program asks for your name, type Austin, or austin, or whatever aUStiN case formatting. Just need to be Austin (you only have two lives for this!). Then, proceed with the manual from the code itself!
+When the program asks for your name, type Austin, or austin, or whatever aUStiN case formatting. You just need to be Austin (you only have two lives for this!), then proceed with the manual from the code itself!
 
 ## 🎮 User Manual: Menu Navigation
 
