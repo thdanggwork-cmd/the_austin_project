@@ -15,7 +15,7 @@ python this_is_for_austin.py
 
 ```
 
-Note: Unauthorized launch attempts by non-Austins will trigger defensive error protocol protocols.
+Note: Unauthorized launch attempts by non-Austins will trigger defensive error protocols.
 
 ---
 ## 👨‍🦲 User Registration:
