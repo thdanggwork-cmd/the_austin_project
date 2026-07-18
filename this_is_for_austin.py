@@ -98,7 +98,9 @@ def reflective_question(
         if ans_comp.lower() in ["a", "b", "c", "d", "e"]:
             break
         print(random.choice(invalid_messages))
+        time.sleep(1.2)
         print("\nPlease choose a valid option.\n")
+        time.sleep(1.2)
 
     print("\n-------- RESULT --------\n")
     time.sleep(0.8)
