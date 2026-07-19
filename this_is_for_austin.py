@@ -86,13 +86,72 @@ Going back to Austin's computer...
 
 
 # ================= PART 5: FRIEND MANUAL =================
-score = 0
-def reflective_question(
-    num,
-    text,
-    jake_comp,
-    explanation,
-):
+COMP_QUESTIONS = [
+    {
+        "num": 1,
+        "text": "Which type of movie sounds most appealing?\n\nA. Action-packed movies\nB. Thrillers, mysteries, and psychological games\nC. Slow-paced documentaries and slice-of-life stories",
+        "jake_comp": "A and B",
+        "explanation": "I like movies that keep me engaged.\nExplosions are cool.\nMysteries are cool.\nPlease don't make me watch paint dry for two hours.",
+        "valid": ["a", "b"]
+    },
+    {
+        "num": 2,
+        "text": "Which type of game sounds most appealing?\n\nA. Competitive multiplayer games\nB. Sandbox / creative games\nC. Story-driven adventures",
+        "jake_comp": "C",
+        "explanation": "I enjoy games with a direction.\nExploration is fun.\nKnowing why I'm moving forward is even better.",
+        "valid": ["c"]
+    },
+    {
+        "num": 3,
+        "text": "What kind of music do you listen to?\n\nA. Pop\nB. Instrumental\nC. Rock\nD. Classical\nE. Other",
+        "jake_comp": "All of the above",
+        "explanation": "My music taste behaves more like a tourist\nthan a permanent resident.\n\nIf it sounds good, it enters the playlist.",
+        "valid": ["a", "b", "c", "d", "e"]
+    },
+    {
+        "num": 4,
+        "text": "Which working style sounds more appealing?\n\nA. Working alone\nB. Working with a team",
+        "jake_comp": "B",
+        "explanation": "I enjoy teamwork more than people expect.\n\nThe challenge isn't teamwork.\nIt's finding a good team.",
+        "valid": ["b"]
+    },
+    {
+        "num": 5,
+        "text": "What makes a friendship valuable?\n\nA. Having fun together\nB. Being there when needed\nC. Trust and honesty\nD. Shared experiences",
+        "jake_comp": "All of the above",
+        "explanation": "Friendships aren't optimization problems.\n\nYou don't maximize one variable.\nThey're all important.",
+        "valid": ["a", "b", "c", "d"]
+    },
+    {
+        "num": 6,
+        "text": "What would you most likely forget before a trip?\n\nA. Phone\nB. Charger\nC. Money\nD. ID Card\nE. Airpods",
+        "jake_comp": "D",
+        "explanation": "I'm always telling myself that I prepared the IDs.\nAnd then forgot it. And encountered 101 problems and criticisms.\n\nPlease remind me twice before going out anytime.\nI'm working on it, I promise! I'll remind you too :D",
+        "valid": ["d"]
+    },
+    {
+        "num": 8,
+        "text": "You find two options. What would you choose?\n\nA. More expensive but slightly better\nB. Cheaper but still acceptable",
+        "jake_comp": "B",
+        "explanation": "I usually try to maximize value.\nYou could see me stretching my wallet like bubble gums.\n\nIt isn't always as sweet as bubble gums, though.",
+        "valid": ["b"]
+    },
+    {
+        "num": 9,
+        "text": "What would a shared room with you probably look like?\n\nA. Extremely organized\nB. Organized chaos\nC. Self-disaster only\nD. Complete mess",
+        "jake_comp": "C",
+        "explanation": "I usually mess up my room a lot.\n\nBut I often try to keep that disorganization to myself.\nI value public places :P\nYeah I'll keep the living room tidy.",
+        "valid": ["c"]
+    },
+    {
+        "num": 10,
+        "text": "Which sounds most satisfying?\n\nA. Solving a difficult problem\nB. Creating something useful\nC. Roast someone playfully\nD. Eating good food",
+        "jake_comp": "All of the above",
+        "explanation": "This question is a free pass.\n\nI genuinely enjoy all four.",
+        "valid": ["a", "b", "c", "d"]
+    }
+]
+def reflective_question(num, text, jake_comp, explanation, valid_answers=None):
     while True:
         ans_comp = input(f"{num}. {text}\n> ")
 
@@ -114,21 +173,12 @@ def reflective_question(
     
     print(explanation)
     pause()
-def compatibility_question(
-    num,
-    text,
-    jake_comp,
-    explanation,
-    valid_answers=None
-):
-    global score
-    if valid_answers is None:
-        valid_answers = [jake_comp.lower()]
-
+    
+def compatibility_question(num, text, jake_comp, explanation, valid_answers):
     while True:
-        ans_comp = input(f"{num}. {text}\n> ")
+        ans_comp = input(f"{num}. {text}\n> ").strip().lower()
 
-        if ans_comp.lower() in ["a", "b", "c", "d", "e"]:
+        if ans_comp in ["a", "b", "c", "d", "e"]:
             break
 
         print(random.choice(invalid_messages))
@@ -141,24 +191,23 @@ def compatibility_question(
 
     print(f"Your answer: {ans_comp.upper()}")
     time.sleep(0.8)
-
     print(f"Jake's answer: {jake_comp.upper()}")
     time.sleep(0.8)
 
-    if ans_comp.lower() in valid_answers:
-        score += 1
+    if ans_comp in valid_answers:
         print("\n[✓] Compatibility point earned!\n")
+        point = 1
     else:
         print("\n[X] No compatibility point this time.\n")
+        point = 0
 
     time.sleep(1)
-
     print(explanation)
     pause()
     
+    return point
+
 def manual():
-    global score
-    score = 0
     print("""
 [✓] Friend manual selected!
 Loading compatibility test...""")
@@ -169,225 +218,54 @@ Let's see if we're any compatible!
 (P/s it doesn't matter that much tbh)""")
     pause()
     
-    compatibility_question(
-1,
-"""Which type of movie sounds most appealing?
-
-A. Action-packed movies
-B. Thrillers, mysteries, and psychological games
-C. Slow-paced documentaries and slice-of-life stories""",
-
-"A and B",
-
-"""I like movies that keep me engaged.
-Explosions are cool.
-Mysteries are cool.
-Please don't make me watch paint dry for two hours.""",
-
-["a", "b"]
-)
+    current_score = 0
     
-    compatibility_question(
-2,
-"""Which type of game sounds most appealing?
-
-A. Competitive multiplayer games
-B. Sandbox / creative games
-C. Story-driven adventures""",
-
-"C",
-
-"""I enjoy games with a direction.
-Exploration is fun.
-Knowing why I'm moving forward is even better.""",
-
-["c"]
-)
-    
-    compatibility_question(
-3,
-"""What kind of music do you listen to?
-
-A. Pop
-B. Instrumental
-C. Rock
-D. Classical
-E. Other""",
-
-"All of the above",
-
-"""My music taste behaves more like a tourist
-than a permanent resident.
-
-If it sounds good, it enters the playlist.""",
-
-["a","b","c","d","e"]
-)
-    compatibility_question(
-4,
-"""Which working style sounds more appealing?
-
-A. Working alone
-B. Working with a team""",
-
-"B",
-
-"""I enjoy teamwork more than people expect.
-
-The challenge isn't teamwork.
-It's finding a good team.""",
-
-["b"]
-)
-    
-    compatibility_question(
-5,
-"""What makes a friendship valuable?
-
-A. Having fun together
-B. Being there when needed
-C. Trust and honesty
-D. Shared experiences""",
-
-"All of the above",
-
-"""Friendships aren't optimization problems.
-
-You don't maximize one variable.
-They're all important.""",
-
-["a","b","c","d"]
-)
-    compatibility_question(
-6,
-"""What would you most likely forget before a trip?
-
-A. Phone
-B. Charger
-C. Money
-D. ID Card
-E. Airpods""",
-
-"D",
-
-"""I'm always telling myself that I prepared the IDs.
-And then forgot it. And encountered 101 problems and criticisms.
-
-Please remind me twice before going out anytime.
-I'm working on it, I promise! I'll remind you too :D""",
-
-["d"]
-)
+    for q in COMP_QUESTIONS[:6]:
+        current_score += compatibility_question(
+            num=q["num"],
+            text=q["text"],
+            jake_comp=q["jake_comp"],
+            explanation=q["explanation"],
+            valid_answers=q["valid"]
+        )
+        
     reflective_question(
-7,
-"""If given unlimited time and resources,
-what would you most likely create?
+        7,
+        """If given unlimited time and resources, what would you most likely create?
 
 A. A successful, worldwide business
 B. Useful projects and tools
 C. Laughter stuff
 D. Something personal""",
-
-"???",
-
-"""Honestly, I don't know yet.
-
-I'm entering a new chapter of life,
-and I haven't fully figured out what I want to do.
-
-Maybe that's okay.
-
-For now, I'm exploring the options I have.
-You could also explore with me if you want to :P""",
-)
+        "???",
+        """Honestly, I don't know yet.\n\nI'm entering a new chapter of life, and I haven't fully figured out what I want to do.\n\nMaybe that's okay.\n\nFor now, I'm exploring the options I have.\nYou could also explore with me if you want to :P"""
+    )
     
-    compatibility_question(
-8,
-"""You find two options. What would you choose?
+    for q in COMP_QUESTIONS[6:]:
+        current_score += compatibility_question(
+            num=q["num"],
+            text=q["text"],
+            jake_comp=q["jake_comp"],
+            explanation=q["explanation"],
+            valid_answers=q["valid"]
+        )
 
-A. More expensive but slightly better
-B. Cheaper but still acceptable""",
-
-"B",
-
-"""I usually try to maximize value.
-You could see me stretching my wallet like bubble gums.
-
-It isn't always as sweet as bubble gums, though.""",
-
-["b"]
-)
-    compatibility_question(
-9,
-"""What would a shared room with you probably look like?
-
-A. Extremely organized
-B. Organized chaos
-C. Self-disaster only
-D. Complete mess""",
-
-"C",
-
-"""I usually mess up my room a lot.
-
-But I often try to keep that disorganization to myself.
-I value public places :P
-Yeah I'll keep the living room tidy.""",
-
-["c"]
-)
-    compatibility_question(
-10,
-"""Which sounds most satisfying?
-
-A. Solving a difficult problem
-B. Creating something useful
-C. Roast someone playfully
-D. Eating good food""",
-
-"All of the above",
-
-"""This question is a free pass.
-
-I genuinely enjoy all four.""",
-
-["a","b","c","d"]
-)
+    print("Calculating compatibility score...")
     time.sleep(1)
-    print(f"Compatibility Score: {score}/9")
+    print(f"Compatibility Score: {current_score}/9")
 
-    if score <= 3:
-        print("""
-Interesting.
-
-One of us may be an alien.
-""")
-
-    elif score <= 5:
-        print("""
-Not bad.
-
-Further roommate testing recommended.
-""")
-
-    elif score <= 7:
-        print("""
-Pretty compatible.
-
-We may survive Purdue.
-""")
-
+    if current_score <= 3:
+        print("\nInteresting.\n\nOne of us may be an alien.\n")
+    elif current_score <= 5:
+        print("\nNot bad.\n\nFurther roommate testing recommended.\n")
+    elif current_score <= 7:
+        print("\nPretty compatible.\n\nWe may survive Purdue.\n")
     else:
-        print("""
-Warning.
-
-Possible duplicate Jake detected.
-""")
+        print("\nWarning.\n\nPossible duplicate Jake detected.\n")
 
     time.sleep(2)
-    print("""[✓] Compatability test finished!
-Thank you for participating in the
-official Jake compatibility assessment.
+    print("""[✓] Compatibility test finished!
+Thank you for participating in the official Jake compatibility assessment.
 
 I believe we both have some similarities and differences.
 But let's try to live together peacefully and with lots of laughter :P
@@ -398,58 +276,10 @@ Happy Purdue, Austin!""")
 
 
 # ================= PART 4: CURRENT ISSUES =================
-def scan():
-    print("""
-[✓] Current issues selected!
-Scanning Jake.exe...\n""")
-    time.sleep(1.2)
-    
-    for i in range(1, 11):
-        bar = "█" * i + "░" * (10 - i)
-        print(f"\rScanning user... [{bar}]", end="")
-        time.sleep(0.4)
-
-    print("""\n\nScan complete.
-5 known bugs detected.
-
-4.1. JUDGEMENT_FILTER.exe
-4.2. THEORY_RESISTANCE.dll
-4.3. OVERTHINKING.sys
-4.4. FEATURE_CREEP.py
-4.5. SELF_PRIORITY_ERROR.log""")
-    VALID_BUGS = ("4.1", "4.2", "4.3", "4.4", "4.5")
-    while True:
-
-        bug = input("\nChoose a bug from 4.1 - 4.5 to investigate, or press Enter to exit: ")
-        if bug == "":
-            print("""\nSome other bugs may be undetected.
-
-If additional issues are discovered,
-please submit bug reports directly to Jake.
-
-Further supervision and support recommended.
-
-Returning to main menu...""")
-            time.sleep(2.0)
-            break
-            
-        elif bug in VALID_BUGS:
-            bugscan(bug)
-        
-        else:
-            print(random.choice(invalid_messages))
-            time.sleep(1.2)
-        
-def bugscan(bug):
-    
-    if bug == "4.1":
-        print("""
-⚠ Bug detected!
-
-Name:
-JUDGEMENT_FILTER.exe
-
-Description:
+BUGS_DATA = {
+    "4.1": {
+        "name": "JUDGEMENT_FILTER.exe",
+        "desc": """Description:
 System may hesitate before expressing thoughts in situations
 involving uncertainty about social judgment.
 Input is processed through an internal "what will people think?" filter, 
@@ -472,16 +302,11 @@ Trigger Conditions:
 Status:
 Active.
 User awareness increasing.
-Gradual improvement observed.""")
-        pause()
-    elif bug == "4.2":
-        print("""
-⚠ Bug detected!
-
-Name:
-THEORY_RESISTANCE.dll
-
-Description:
+Gradual improvement observed."""
+    },
+    "4.2": {
+        "name": "THEORY_RESISTANCE.dll",
+        "desc": """Description:
 System shows reduced efficiency when processing
 abstract information without immediate context or application.
 Pure theory input may fail to sustain
@@ -503,16 +328,11 @@ Trigger Conditions:
 
 Status:
 Ongoing.
-Workarounds (projects, examples) highly effective.""")
-        pause()
-    elif bug == "4.3":
-        print("""
-⚠ Bug detected!
-
-Name:
-OVERTHINKING.sys
-
-Description:
+Workarounds (projects, examples) highly effective."""
+    },
+    "4.3": {
+        "name": "OVERTHINKING.sys",
+        "desc": """Description:
 System may enter recursive analysis loops
 after decisions or social events.
 Minor inputs can expand into extended
@@ -534,16 +354,11 @@ Trigger Conditions:
 
 Status:
 Active.
-Management strategies partially effective.""")
-        pause()
-    elif bug == "4.4":
-        print("""
-⚠ Bug detected!
-
-Name:
-FEATURE_CREEP.py
-
-Description:
+Management strategies partially effective."""
+    },
+    "4.4": {
+        "name": "FEATURE_CREEP.py",
+        "desc": """Description:
 System may expand simple tasks beyond original scope by continuously
 adding new ideas, improvements, or extra layers of detail during execution.
 
@@ -563,16 +378,11 @@ Trigger Conditions:
 
 Status:
 Stable but persistent.
-No corrective action planned.""")
-        pause()
-    elif bug == "4.5":
-        print("""
-⚠ Bug detected!
-
-Name:
-SELF_PRIORITY_ERROR.log
-
-Description:
+No corrective action planned."""
+    },
+    "4.5": {
+        "name": "SELF_PRIORITY_ERROR.log",
+        "desc": """Description:
 System frequently provides support to others.
 
 Unexpected side effect:
@@ -591,18 +401,140 @@ Patch currently in development.
 
 Developer Notes:
 User has become aware of the issue.
-Progress is slow but measurable.""")
-        pause()
+Progress is slow but measurable."""
+    }
+}
+def bugscan(bug):
+    bug_info = BUGS_DATA[bug]
+    
+    print("\n⚠ Bug detected!")
+    print(f"\nName:\n{bug_info['name']}")
+    print(f"\n{bug_info['desc']}")
+    pause()
+    
+def scan():
+    print("""
+[✓] Current issues selected!
+Scanning Jake.exe...\n""")
+    time.sleep(1.2)
+    
+    for i in range(1, 11):
+        bar = "█" * i + "░" * (10 - i)
+        print(f"\rScanning user... [{bar}]", end="")
+        time.sleep(0.4)
+
+    print("""\n\nScan complete.
+5 known bugs detected.
+
+4.1. JUDGEMENT_FILTER.exe
+4.2. THEORY_RESISTANCE.dll
+4.3. OVERTHINKING.sys
+4.4. FEATURE_CREEP.py
+4.5. SELF_PRIORITY_ERROR.log""")
+
+    while True:
+        bug = input("\nChoose a bug from 4.1 - 4.5 to investigate, or press Enter to exit: ").strip()
+        
+        if bug == "":
+            print("""\nSome other bugs may be undetected.
+
+If additional issues are discovered,
+please submit bug reports directly to Jake.
+
+Further supervision and support recommended.
+
+Returning to main menu...\n""")
+            time.sleep(2.0)
+            break
+            
+        elif bug in BUGS_DATA:
+            bugscan(bug)
+        
+        else:
+            print(random.choice(invalid_messages))
+            time.sleep(1.2)
 # ================= PART 4: CURRENT ISSUES (END) =================
 
 
-# ================= PART 3.1: BEHAVIORS GAME =================
-def question(num, text, jake_answer, reaction_a, reaction_b, reaction_c):
+# ================= PART 3: BEHAVIORS =================
+BEHAVIOR_QUESTIONS = [
+    {
+        "num": 1,
+        "text": """When learning something new, you usually:
 
+A. Read theory and understand it first.
+B. Start trying things immediately.
+C. Alternate between theory and practice.""",
+        "jake_answer": "B",
+        "reactions": {
+            "a": "-> Interesting. I usually get impatient if I stay in theory for too long 😭",
+            "b": "-> Yep, same. I like to try things first and figure things out along the way.",
+            "c": "-> Honestly, that's probably the healthiest approach."
+        }
+    },
+    {
+        "num": 2,
+        "text": """In a new group of people, you usually:
+
+A. Observe first and speak when comfortable.
+B. Start conversations and meet people quickly.
+C. Depends on the group and the vibe.""",
+        "jake_answer": "C",
+        "reactions": {
+            "a": "-> I can be like that too. Sometimes I need a bit of time to understand the vibe.",
+            "b": "-> That's braver than me 🤣 I don't usually walk into a room and start collecting friends.",
+            "c": "-> Same. My social mode changes a lot depending on who's around."
+        }
+    },
+    {
+        "num": 3,
+        "text": """Which type of behavior bothers you most?
+
+A. Arrogance and looking down on others.
+B. Constant negativity and complaining.
+C. Dishonesty and talking behind people's backs.""",
+        "jake_answer": "A",
+        "reactions": {
+            "a": "-> Same. People acting superior for no reason drains my battery surprisingly fast.",
+            "b": "-> I get that too. A little complaining is fine, but endless negativity gets exhausting.",
+            "c": "-> Yeah... Trust is really important in any friendship."
+        }
+    },
+    {
+        "num": 4,
+        "text": """What usually motivates you to do something?
+
+A. A clear goal or achievement.
+B. Curiosity and interest.
+C. Responsibility to other people.""",
+        "jake_answer": "B",
+        "reactions": {
+            "a": "-> Goals help, but they're usually not enough by themselves for me.",
+            "b": "-> Yep. Curiosity is ridiculously effective on me. \nOne random idea can consume my entire afternoon.",
+            "c": "-> Helping people is also motivating for me. I like feeling useful."
+        }
+    },
+    {
+        "num": 5,
+        "text": """When facing a difficult problem, you usually:
+
+A. Keep trying different approaches.
+B. Ask someone for help.
+C. Take a break and return later.""",
+        "jake_answer": "A",
+        "reactions": {
+            "a": "-> Same. I tend to poke problems with a stick until they reveal what they're hiding. 🤓",
+            "b": "-> I should probably do this more often. \nAsking for help isn't exactly my first instinct.",
+            "c": "-> Honestly, this works more often than people think. A reset can help a lot."
+        }
+    }
+]
+    
+def behavior_question(num, text, jake_answer, reactions):
     while True:
-        ans = input(f"{num}. {text}\n> ")
+        ans = input(f"{num}. {text}\n> ").strip().lower()
 
-        if ans.lower() in ["a", "b", "c"]:
+        if ans in ["a", "b", "c"]:
             break
 
         print(random.choice(invalid_messages))
@@ -615,97 +547,28 @@ def question(num, text, jake_answer, reaction_a, reaction_b, reaction_c):
     print(f"Your answer: {ans.upper()}")
     time.sleep(1)
     print(f"Jake's answer: {jake_answer}")
+    time.sleep(1)
+    print(reactions[ans])
+    pause()
 
-    if ans.lower() == "a":
-        time.sleep(0.8)
-        print(reaction_a)
-        pause()
-        
-    elif ans.lower() == "b":
-        time.sleep(0.8)
-        print(reaction_b)
-        pause()
-    else:
-        time.sleep(0.8)
-        print(reaction_c)
-        pause()
-# ================= PART 3.1: BEHAVIORS GAME (END) =================
-
-
-# ================= PART 3.2: BEHAVIORS =================
 def behaviors():
     print("""
 [✓] Behaviors selected!
 Loading questions...""")
     time.sleep(1.2)
 
-    print("""\nYou're gonna answers some questions about behaviors with me.
+    print("""\nYou're gonna answer some questions about behaviors with me.
 It'll be useful to get to know some of my basic human functions :D""")
     pause()
-    question(
-    1,
-    """When learning something new, you usually:
 
-A. Read theory and understand it first.
-B. Start trying things immediately.
-C. Alternate between theory and practice.""",
-    "B",
-    "-> Interesting. I usually get impatient if I stay in theory for too long 😭",
-    "-> Yep, same. I like to try things first and figure things out along the way.",
-    "-> Honestly, that's probably the healthiest approach."
-                    )
-            
-    question(
-    2,
-    """In a new group of people, you usually:
+    for q in BEHAVIOR_QUESTIONS:
+        behavior_question(
+            num=q["num"],
+            text=q["text"],
+            jake_answer=q["jake_answer"],
+            reactions=q["reactions"]
+        )
 
-A. Observe first and speak when comfortable.
-B. Start conversations and meet people quickly.
-C. Depends on the group and the vibe.""",
-    "C",
-    "-> I can be like that too. Sometimes I need a bit of time to understand the vibe.",
-    "-> That's braver than me 🤣 I don't usually walk into a room and start collecting friends.",
-    "-> Same. My social mode changes a lot depending on who's around."
-                    )
-            
-    question(
-    3,
-    """Which type of behavior bothers you most?
-
-A. Arrogance and looking down on others.
-B. Constant negativity and complaining.
-C. Dishonesty and talking behind people's backs.""",
-    "A",
-    "-> Same. People acting superior for no reason drains my battery surprisingly fast.",
-    "-> I get that too. A little complaining is fine, but endless negativity gets exhausting.",
-    "-> Yeah... Trust is really important in any friendship."
-                    )
-            
-    question(
-    4,
-    """What usually motivates you to do something?
-
-A. A clear goal or achievement.
-B. Curiosity and interest.
-C. Responsibility to other people.""",
-    "B",
-    "-> Goals help, but they're usually not enough by themselves for me.",
-    "-> Yep. Curiosity is ridiculously effective on me. \nOne random idea can consume my entire afternoon.",
-    "-> Helping people is also motivating for me. I like feeling useful."
-                    )
-            
-    question(
-    5,
-    """When facing a difficult problem, you usually:
-
-A. Keep trying different approaches.
-B. Ask someone for help.
-C. Take a break and return later.""",
-    "A",
-    "-> Same. I tend to poke problems with a stick until they reveal what they're hiding. 🤓",
-    "-> I should probably do this more often. \nAsking for help isn't exactly my first instinct.",
-    "-> Honestly, this works more often than people think. A reset can help a lot."
-            )
     time.sleep(2)
     print("""\n[✓] Test finished!
 Congratulations. You have successfully completed the behavior test.
@@ -717,26 +580,81 @@ Oh, you can also try as many options as you want.
 They have different responses :3""")
     
     menu()
-# ================= PART 3.2: BEHAVIORS (END) =================
+# ================= PART 3: BEHAVIORS (END) =================
 
 
 # ================= PART 2: HOBBIES =================
+HOBBIES_DATA = {
+    "2.1": {
+        "name": "Photography",
+        "desc": """I enjoy taking photos, especially landscapes.
+My walking speed decreases by approximately 90%
+whenever the landscape becomes interesting.
+Please be patient."""
+    },
+    "2.2": {
+        "name": "Cooking",
+        "desc": """I enjoy cooking when I choose to cook.
+If someone urges me to cook, my motivation drops significantly.
+If I choose to cook, I become 999% focused.
+Scientists are still investigating why."""
+    },
+    "2.3": {
+        "name": "Sleeping",
+        "desc": """...
+...
+zzz...
+
+Yes, I enjoy sleeping.
+Unfortunately, sleep schedule and I are
+currently in a long-distance relationship."""
+    },
+    "2.4": {
+        "name": "Random projects",
+        "desc": """I enjoy making random things:
+- Python programs
+- Photography projects
+- Weird experiments
+- Solving problems nobody asked for"""
+    },
+    "2.5": {
+        "name": "Chaos",
+        "desc": """I own a talking cactus.
+It repeats everything I say.
+
+"I own a talking cac-"
+I turned it off in time.
+
+I also enjoy making people laugh.
+Occasionally this is achieved through sarcasm.
+Most of them are friendly.
+
+Keyword: "Most"."""
+    }
+}
+def hobbydesc(choicehb):
+    hobby = HOBBIES_DATA[choicehb]
+    
+    print(f"\n[✓] {hobby['name']} selected!")
+    print(hobby["desc"])
+    pause()
+    
 def hobbies():
     print("""
 [✓] Hobbies selected!
 Loading Jake's 101 random hobbies...""")
     time.sleep(1.2)
+    
     print("""\nI like a lot of things. Pick one:
-
 2.1 Photography
 2.2 Cooking
 2.3 Sleeping
 2.4 Random projects
 2.5 Chaos""")
-    VALID_HOBBIES = ("2.1", "2.2", "2.3", "2.4", "2.5")
+
     while True:
+        choicehb = input("\nChoose a hobby from 2.1 - 2.5, or press Enter to exit: ").strip()
         
-        choicehb = input("\nChoose a hobby from 2.1 - 2.5, or press Enter to exit: ")
         if choicehb == "":
             print("""
 [✓] Oh you want to come back.
@@ -748,74 +666,12 @@ Returning to main menu...\n""")
             time.sleep(2.4)
             break
         
-        elif choicehb in VALID_HOBBIES:
+        elif choicehb in HOBBIES_DATA:
             hobbydesc(choicehb)
             
         else:
             print(random.choice(invalid_messages))
             time.sleep(1.2)
-            
-def hobbydesc(choicehb):
-
-    if choicehb == "2.1":
-        print("""
-[✓] Photography selected!
-
-I enjoy taking photos, especially landscapes.
-My walking speed decreases by approximately 90%
-whenever the landscape becomes interesting.
-Please be patient.""")
-        pause()
-            
-    elif choicehb == "2.2":
-        print("""
-[✓] Cooking selected!
-
-I enjoy cooking when I choose to cook.
-If someone urges me to cook, my motivation drops significantly.
-If I choose to cook, I become 999% focused.
-Scientists are still investigating why.""")
-        pause()
-            
-    elif choicehb == "2.3":
-        print("""
-[✓] Sleeping selected!
-...
-...
-zzz...
-
-Yes, I enjoy sleeping.
-Unfortunately, sleep schedule and I are
-currently in a long-distance relationship.""")
-        pause()
-            
-    elif choicehb == "2.4":
-        print("""
-[✓] Random projects selected!
-
-I enjoy making random things:
-- Python programs
-- Photography projects
-- Weird experiments
-- Solving problems nobody asked for""")
-        pause()
-            
-    elif choicehb == "2.5":
-        print("""
-[✓] Chaos selected!
-
-I own a talking cactus.
-It repeats everything I say.
-
-"I own a talking cac-"
-I turned it off in time.
-
-I also enjoy making people laugh.
-Occasionally this is achieved through sarcasm.
-Most of them are friendly.
-
-Keyword: "Most".""")
-        pause()
 # ================= PART 2: HOBBIES (END) =================
 
 
@@ -866,7 +722,7 @@ def info():
 6. Exit
 """)
 
-        choice2 = input("Option: ")
+        choice2 = input("Option: ").strip()
             
         if choice2 == "1":
                 background()
@@ -889,7 +745,7 @@ def info():
         else:
             print(random.choice(invalid_messages))
             time.sleep(1.2)
-            menu()
+            continue
 # ================= MENU NAVIGATION (END) =================
 
 
@@ -921,11 +777,11 @@ I can't stop you anyways.)\n""")
 
 
 def loading():
-    choice1 = input("Type y to continue!\n")
+    choice1 = input("Type y to continue!\n").strip()
     if choice1.lower() != "y":
         print(random.choice(invalid_messages))
 
-        choice1 = input("\nType y AGAIN to continue!\n")
+        choice1 = input("\nType y AGAIN to continue!\n").strip()
         if choice1.lower() != "y":
             print("\nYou have lost all your lives :P :P :P.\nPlease run the program again.")
             time.sleep(2.4)
@@ -957,12 +813,12 @@ So if you're ready...""")
     loading()
 
 def verify_user():
-    name = input("Please type your name: ")
+    name = input("Please type your name: ").strip()
 
     if name.lower() != "austin":
         print(random.choice(not_Austin))
 
-        name_again = input("\nPlease type your name AGAIN: ")
+        name_again = input("\nPlease type your name AGAIN: ").strip()
 
         if name_again.lower() != "austin":
             print("\nMr. Lin please cooperate.\nPlease run the program again.")
