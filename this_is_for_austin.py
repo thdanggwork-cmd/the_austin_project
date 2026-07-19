@@ -31,9 +31,9 @@ not_Austin = [
 # ================= PAUSES =================
 import time
 def pause():
-    input("\n[Press Enter to continue...]\n")
+    input("\n[Press anything to continue...]\n")
 def menu():
-    input("\n[Press Enter to return to main menu...]\n")
+    input("\n[Press anything to return to main menu...]\n")
     print("Returning to main menu...\n")
     time.sleep(0.8)
 # ================= PAUSES (END) =================
@@ -86,6 +86,7 @@ Going back to Austin's computer...
 
 
 # ================= PART 5: FRIEND MANUAL =================
+score = 0
 def reflective_question(
     num,
     text,
@@ -120,6 +121,7 @@ def compatibility_question(
     explanation,
     valid_answers=None
 ):
+    global score
     if valid_answers is None:
         valid_answers = [jake_comp.lower()]
 
@@ -415,10 +417,10 @@ Scanning Jake.exe...\n""")
 4.3. OVERTHINKING.sys
 4.4. FEATURE_CREEP.py
 4.5. SELF_PRIORITY_ERROR.log""")
+    VALID_BUGS = ("4.1", "4.2", "4.3", "4.4", "4.5")
     while True:
 
         bug = input("\nChoose a bug from 4.1 - 4.5 to investigate, or press Enter to exit: ")
-
         if bug == "":
             print("""\nSome other bugs may be undetected.
 
@@ -427,10 +429,16 @@ please submit bug reports directly to Jake.
 
 Further supervision and support recommended.
 
-Returning to main menu...\n""")
-            time.sleep(0.8)
+Returning to main menu...""")
+            time.sleep(2.0)
             break
-        bugscan(bug)
+            
+        elif bug in VALID_BUGS:
+            bugscan(bug)
+        
+        else:
+            print(random.choice(invalid_messages))
+            time.sleep(1.2)
         
 def bugscan(bug):
     
@@ -465,7 +473,7 @@ Status:
 Active.
 User awareness increasing.
 Gradual improvement observed.""")
-         
+        pause()
     elif bug == "4.2":
         print("""
 ⚠ Bug detected!
@@ -496,7 +504,7 @@ Trigger Conditions:
 Status:
 Ongoing.
 Workarounds (projects, examples) highly effective.""")
-
+        pause()
     elif bug == "4.3":
         print("""
 ⚠ Bug detected!
@@ -527,7 +535,7 @@ Trigger Conditions:
 Status:
 Active.
 Management strategies partially effective.""")
-
+        pause()
     elif bug == "4.4":
         print("""
 ⚠ Bug detected!
@@ -556,7 +564,7 @@ Trigger Conditions:
 Status:
 Stable but persistent.
 No corrective action planned.""")
-            
+        pause()
     elif bug == "4.5":
         print("""
 ⚠ Bug detected!
@@ -584,9 +592,7 @@ Patch currently in development.
 Developer Notes:
 User has become aware of the issue.
 Progress is slow but measurable.""")
-    else:
-        print(random.choice(invalid_messages))
-        time.sleep(1.2)
+        pause()
 # ================= PART 4: CURRENT ISSUES (END) =================
 
 
@@ -613,13 +619,16 @@ def question(num, text, jake_answer, reaction_a, reaction_b, reaction_c):
     if ans.lower() == "a":
         time.sleep(0.8)
         print(reaction_a)
+        pause()
         
     elif ans.lower() == "b":
         time.sleep(0.8)
         print(reaction_b)
+        pause()
     else:
         time.sleep(0.8)
         print(reaction_c)
+        pause()
 # ================= PART 3.1: BEHAVIORS GAME (END) =================
 
 
@@ -645,7 +654,6 @@ C. Alternate between theory and practice.""",
     "-> Yep, same. I like to try things first and figure things out along the way.",
     "-> Honestly, that's probably the healthiest approach."
                     )
-    pause()
             
     question(
     2,
@@ -659,7 +667,6 @@ C. Depends on the group and the vibe.""",
     "-> That's braver than me 🤣 I don't usually walk into a room and start collecting friends.",
     "-> Same. My social mode changes a lot depending on who's around."
                     )
-    pause()
             
     question(
     3,
@@ -673,7 +680,6 @@ C. Dishonesty and talking behind people's backs.""",
     "-> I get that too. A little complaining is fine, but endless negativity gets exhausting.",
     "-> Yeah... Trust is really important in any friendship."
                     )
-    pause()
             
     question(
     4,
@@ -687,7 +693,6 @@ C. Responsibility to other people.""",
     "-> Yep. Curiosity is ridiculously effective on me. \nOne random idea can consume my entire afternoon.",
     "-> Helping people is also motivating for me. I like feeling useful."
                     )
-    pause()
             
     question(
     5,
@@ -728,6 +733,7 @@ Loading Jake's 101 random hobbies...""")
 2.3 Sleeping
 2.4 Random projects
 2.5 Chaos""")
+    VALID_HOBBIES = ("2.1", "2.2", "2.3", "2.4", "2.5")
     while True:
         
         choicehb = input("\nChoose a hobby from 2.1 - 2.5, or press Enter to exit: ")
@@ -741,31 +747,38 @@ when we live together. Prepare yourself.
 Returning to main menu...\n""")
             time.sleep(2.4)
             break
-        hobbydesc(choicehb)
+        
+        elif choicehb in VALID_HOBBIES:
+            hobbydesc(choicehb)
+            
+        else:
+            print(random.choice(invalid_messages))
+            time.sleep(1.2)
+            
 def hobbydesc(choicehb):
 
-        if choicehb == "2.1":
-            print("""
+    if choicehb == "2.1":
+        print("""
 [✓] Photography selected!
 
 I enjoy taking photos, especially landscapes.
 My walking speed decreases by approximately 90%
 whenever the landscape becomes interesting.
 Please be patient.""")
-            time.sleep(2.4)
+        pause()
             
-        elif choicehb == "2.2":
-            print("""
+    elif choicehb == "2.2":
+        print("""
 [✓] Cooking selected!
 
 I enjoy cooking when I choose to cook.
 If someone urges me to cook, my motivation drops significantly.
 If I choose to cook, I become 999% focused.
 Scientists are still investigating why.""")
-            time.sleep(2.4)
+        pause()
             
-        elif choicehb == "2.3":
-            print("""
+    elif choicehb == "2.3":
+        print("""
 [✓] Sleeping selected!
 ...
 ...
@@ -774,10 +787,10 @@ zzz...
 Yes, I enjoy sleeping.
 Unfortunately, sleep schedule and I are
 currently in a long-distance relationship.""")
-            time.sleep(2.4)
+        pause()
             
-        elif choicehb == "2.4":
-            print("""
+    elif choicehb == "2.4":
+        print("""
 [✓] Random projects selected!
 
 I enjoy making random things:
@@ -785,10 +798,10 @@ I enjoy making random things:
 - Photography projects
 - Weird experiments
 - Solving problems nobody asked for""")
-            time.sleep(2.4)
+        pause()
             
-        elif choicehb == "2.5":
-            print("""
+    elif choicehb == "2.5":
+        print("""
 [✓] Chaos selected!
 
 I own a talking cactus.
@@ -802,10 +815,7 @@ Occasionally this is achieved through sarcasm.
 Most of them are friendly.
 
 Keyword: "Most".""")
-            time.sleep(2.4)
-        else:
-            print(random.choice(invalid_messages))
-            time.sleep(1.2)
+        pause()
 # ================= PART 2: HOBBIES (END) =================
 
 
@@ -964,10 +974,11 @@ def verify_user():
 
 
 # ================= START THE GAME! =================
-print("""================================
+if __name__ == "__main__":
+    print("""================================
 歡迎來到 this_is_for_austin.exe!
 Welcome to this_is_for_austin.exe!
 
 Version 1.0 - Definitely Not Malware Edition
 ================================\n""")
-verify_user()
+    verify_user()
