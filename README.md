@@ -1,15 +1,16 @@
 # this_is_for_austin.py 🌵
 ## 🚀 Release Notes
 
-### v1.1.0 — The "Data-Driven Overhaul" Edition
+### v1.1.0 — The "Data-Driven Overhaul" Edition!
 This update completely rewrites the application architecture, separating execution logic from the text content to make the codebase professional, optimized, and incredibly easy to maintain.
 
-#### 🛠️ Architectural Improvements
-* **Data-Driven Design:** Extracted over 100 lines of hardcoded question prompts, hobby descriptions, and system bugs out of sequential logic and grouped them into clean dictionary data structures (`COMP_QUESTIONS`, `BEHAVIOR_QUESTIONS`, `BUGS_DATA`, `HOBBIES_DATA`).
-* **State Encapsulation:** Eliminated risky `global` variable tracking for game scores. Functions now utilize localized scope and explicit `return` pipes to safely pass point updates directly to math operators.
-* **Input Sanitization Layer:** Chained `.strip().lower()` validation mechanics across all terminal prompts, creating a safety layer that catches accidental whitespace or casing errors without throwing runtime glitches.
-* **Streamlined Control Flow:** Replaced multi-tiered `if/elif/else` conditional chains in sub-menus with elegant direct dictionary key lookups.
+#### 🛠️ Operational Overhauls (How I de-bugged my own code)
+* **The "Data-Driven" Clutter Eviction:** Yanked over 100 lines of massive text walls, hobby descriptions, and emotional baggage out of my main loop and stuffed them into nicely organized dictionary warehouses (`COMP_QUESTIONS`, `BEHAVIOR_QUESTIONS`, `BUGS_DATA`, `HOBBIES_DATA`). The code is now clean; my room is next.
+* **Wiping out Globals (State Encapsulation):** Banned risky `global` score trackers because letting functions blindly change things in the outside world is a debugging nightmare. Functions now act like miniature vending machines—they do their math locally and use `return` to drop exactly 1 or 0 points straight back into the tally engine.
+* **The Anti-Austin Finger-Slip Shield:** Chained `.strip().lower()` to literally every single user input field. Now, if you accidentally hit the spacebar or panic-mash the Caps Lock key while trying to answer, the program silently fixes it instead of immediately roasting your typos. You're welcome.
+* **`if/elif` Demolition:** Completely tore down those long, annoying multi-tiered conditional chains in the sub-menus. Instead of asking Python 50 times "is it choice A? is it choice B?", the script now uses elegant direct dictionary key lookups to grab your reactions instantly.
 ---
+## Description
 An interactive, terminal-based CLI application engineered to introduce myself (Jake) to my roommate Austin. Intended to bypass awkward remote roommate small talk, streamline boarding logistics, and stress-test the user's input boundaries.
 
 > **"thoughtful project"**
