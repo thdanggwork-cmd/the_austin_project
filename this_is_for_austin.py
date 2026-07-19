@@ -385,7 +385,7 @@ Possible duplicate Jake detected.
 """)
 
     time.sleep(2)
-    print("""[✓] Compatibility test finished!
+    print("""[✓] Compatability test finished!
 Thank you for participating in the
 official Jake compatibility assessment.
 
