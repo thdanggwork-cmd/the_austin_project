@@ -161,7 +161,7 @@ def manual():
     score = 0
     print("""
 [✓] Friend manual selected!
-Loading compatability test...""")
+Loading compatibility test...""")
     time.sleep(1.2)
 
     print("""\nHere are some manuals of how to live with me.
@@ -385,7 +385,7 @@ Possible duplicate Jake detected.
 """)
 
     time.sleep(2)
-    print("""[✓] Compatability test finished!
+    print("""[✓] Compatibility test finished!
 Thank you for participating in the
 official Jake compatibility assessment.
 
